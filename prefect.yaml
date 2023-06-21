@@ -26,7 +26,7 @@ deployments:
   description: Main pipeline
   schedule: null
   entrypoint: gemma102.py:gemma_pipeline
-  parameters: {}
+  parameters: {"lat": 32.71, "lon": 117.16}
   work_pool:
     name: cool-pool
     work_queue_name: null

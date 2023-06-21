@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 from prefect import flow, task, get_run_logger
 from prefect.tasks import task_input_hash
+from prefect.artifacts import create_markdown_artifact
 
 WEATHER_MEASURES = "temperature_2m,relativehumidity_2m,rain,windspeed_10m"
 
@@ -74,6 +75,13 @@ def log_forecast(weather: str, lat: float, lon: float):
     for measure in WEATHER_MEASURES.split(","):
         log += f"- {measure}: {weather[measure][next_hour]}\n"
 
+    # Create artifact
+    create_markdown_artifact(
+        key="weather-forecast",
+        markdown=log,
+        description="The forecast for the next hour",
+    )
+    
     # Save the data
     with open("most_recent_results.md", "w") as f:
         f.write(log)
