@@ -85,6 +85,8 @@ def gemma_pipeline(lat: float, lon: float):
     weather = fetch_hourly_weather(lat, lon)
     result = save_weather(weather)
     log_forecast(weather, lat, lon)
+    print(lat)
+    print(lon)
     return result
 
 
