@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from prefect import flow, task, get_run_logger
 from prefect.tasks import task_input_hash
 from prefect.artifacts import create_markdown_artifact
+from prefect.blocks.notifications import SlackWebhook
 
 WEATHER_MEASURES = "temperature_2m,relativehumidity_2m,rain,windspeed_10m"
 
@@ -58,7 +59,7 @@ def save_weather(weather: dict):
 @task(
     name="Log next forecast",
     cache_key_fn=task_input_hash,
-    cache_expiration=timedelta(hours=1),
+    cache_expiration=timedelta(seconds=1),
 )
 def log_forecast(weather: str, lat: float, lon: float):
     """Create a markdown file with the results of the next hour forecast"""
@@ -81,6 +82,11 @@ def log_forecast(weather: str, lat: float, lon: float):
         markdown=log,
         description="The forecast for the next hour",
     )
+
+    # Send the notification
+    print("attempting to send slack notification")
+    slack_webhook_block = SlackWebhook.load("slack-dt8-devs")
+    slack_webhook_block.notify("Hello from Prefect!")
     
     # Save the data
     with open("most_recent_results.md", "w") as f:

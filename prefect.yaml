@@ -4,7 +4,7 @@
 
 # Generic metadata about this project
 name: prefect-training-for-git
-prefect-version: 2.10.15
+prefect-version: 2.10.16
 
 # build section allows you to manage and build docker images
 build: null
@@ -20,14 +20,14 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: gemma_weather
+- name: dev
   version: null
   tags: []
-  description: Main pipeline
-  schedule: null
-  entrypoint: gemma102.py:gemma_pipeline
-  parameters: {"lat": 32.71, "lon": 117.16}
+  description: null
+  entrypoint: module202.py:my_pipeline
+  parameters: {}
   work_pool:
     name: cool-pool
     work_queue_name: null
     job_variables: {}
+  schedule: null
