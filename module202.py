@@ -1,7 +1,7 @@
 import httpx  # requests capability, but can work with async
 from prefect import flow, task
 from prefect_aws.s3 import S3Bucket
-from prefect.blocks.notifications import SlackWebhook
+from prefect.blocks.webhook import Webhook
 from datetime import datetime
 
 @task
@@ -32,16 +32,16 @@ def upload_to_s3(filename: str):
 
 @task
 def notify_slack():
-    slack_webhook_block = SlackWebhook.load("slack-prefect-channel")
-    slack_webhook_block.notify("Hello from Adam!")
+    webhook_block = Webhook.load("try-slacking-dt8")
+    webhook_block
 
 @flow
 def my_pipeline(lat: float, lon: float):
     temp = fetch_temp(lat, lon)
-    csv_filename = create_filename()
-    save_weather(temp, csv_filename)
-    upload_to_s3(csv_filename)
-    notify_slack()
+    # csv_filename = create_filename()
+    # save_weather(temp, csv_filename)
+    # upload_to_s3(csv_filename)
+    # notify_slack()
 
 
 if __name__ == "__main__":
