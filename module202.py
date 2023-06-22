@@ -33,7 +33,7 @@ def upload_to_s3(filename: str):
 @task
 def notify_slack():
     slack_webhook_block = SlackWebhook.load("slack-dt8-devs")
-    slack_webhook_block.notify("Hello from Prefect!")
+    slack_webhook_block.notify("Hello from Adam!")
 
 @flow
 def my_pipeline(lat: float, lon: float):
